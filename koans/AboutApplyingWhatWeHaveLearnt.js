@@ -110,13 +110,46 @@ describe("About Applying What We Have Learnt", function() {
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
-  /*
-  it("should find the largest prime factor of a composite number", function () {
   
+  it("should find the largest prime factor of a composite number", function () {   //This is not the most effecient way to do this...but it works. 
+  var returnLargestPrimeFactor = function(num) {
+	var primes = createPrimeList(num);
+	var factors = createFactorsList(num);
+	for (var i = factors.length; i>0; i--)
+		{for (var j = 0; j < primes.length; j++) {if (factors[i]==primes[j]) {return factors[i]}}}
+	return 1;
+  };
   });
+  
+  var createPrimeList = function(top) {
+  if (top == 0) {return [];}
+  if (top == 1) {return [1];}
+  primes = [1, 2]
+  for (var i = 3; i<top+1; i++) {
+	var prime = true;
+	for (var j = 1; j<primes.length; j++) {
+		if (i % primes[j] === 0)
+		{
+		prime = false;
+		j = primes.length;
+		}
+	}
+	if (prime) {primes.push(i);}
+  }
+  return primes;
+  }
+  
+  var createFactorsList = function(num) {
+	var factors = []
+	for (var i = 1; i < num+1; i++)
+	{
+		if (num % i === 0) {factors.push(i);}
+	}
+	return factors;
+  };
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
-    
+  var largestPalindrome = function() {}
   });
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
@@ -131,5 +164,4 @@ describe("About Applying What We Have Learnt", function() {
   it("should find the 10001st prime", function () {
 
   });
-  */
 });
