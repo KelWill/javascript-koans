@@ -90,15 +90,22 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
-
+    //var ingredientCount = { "{ingredient name}": 0 };
+	var ingredientCount = _.reduce(_.flatten(_.map(products, function(p) {return p.ingredients})), function(memo, item) 
+        {if (memo[item] > 0) {memo[item] += 1}
+         else {
+			memo[item] = 1;
+			}
+		return memo;
+		 }, []);
+	
     /* chain() together map(), flatten() and reduce() */
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
