@@ -111,49 +111,86 @@ describe("About Applying What We Have Learnt", function() {
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
   
-  it("should find the largest prime factor of a composite number", function () {   //This is not the most effecient way to do this...but it works. 
+  it("should find the largest prime factor of a composite number", function () { 
   var returnLargestPrimeFactor = function(num) {
 	var primes = createPrimeList(num);
-	var factors = createFactorsList(num);
+	var factors =_.flatten(createFactorsList(num)).sort(function(a,b) {return a - b});
 	for (var i = factors.length; i>0; i--)
-		{for (var j = 0; j < primes.length; j++) {if (factors[i]==primes[j]) {return factors[i]}}}
+		{for (var j = 0; j < primes.length; j++) {if (factors[i]==primes[j]) {return factors[i];}}}
 	return 1;
   };
   });
   
   var createPrimeList = function(top) {
-  if (top == 0) {return [];}
-  if (top == 1) {return [1];}
-  primes = [1, 2]
-  for (var i = 3; i<top+1; i++) {
-	var prime = true;
-	for (var j = 1; j<primes.length; j++) {
-		if (i % primes[j] === 0)
-		{
-		prime = false;
-		j = primes.length;
-		}
-	}
-	if (prime) {primes.push(i);}
+    if (top == 0) {return [];}
+    if (top == 1) {return [1];}
+    primes = [1, 2]
+    for (var i = 3; i<top+1; i++) {
+      var prime = true;
+      for (var j = 1; j<primes.length; j++) {
+        if (i % primes[j] === 0)
+        {
+          prime = false;
+          j = primes.length;
+        }
+    }
+  if (prime) {primes.push(i);}
   }
-  return primes;
+    return primes;
   }
   
   var createFactorsList = function(num) {
-	var factors = []
-	for (var i = 1; i < num+1; i++)
+	var factors = [];
+	var top = num;
+	for (var i = 1; i < top; i++)
 	{
-		if (num % i === 0) {factors.push(i);}
+		if (num % i === 0) {
+		factors.push([i, num/i]);
+		top = num/i;
+		}
 	}
 	return factors;
   };
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
-  var largestPalindrome = function() {}
-  });
+  var largestPalindrome = function() 
+  {
+    for (var i = 999*999; i>=100*100; i--) 
+    {
+      var s = String(i);
+      pal = true
+      for (var j=0; j < s.length/2; j++)  //first check to see if number is a palindrome
+      {
+        if (s[j] != s[s.length-j-1]) 
+        {
+          pal = false;                 
+        }
+      }
+      if (pal == true) //if it is a palindrome, need to check to make sure it's the product of 2 three digit numbers
+      {
+        console.log(i + "is a palindrome");
+        factors = createFactorsList(i);
+        for (var k = factors.length-1; k >= 0; k--)
+          {
+            if (factors[k][0] > 99 & factors[k][0] < 999 & factors[k][1] > 99 & factors[k][1] < 999)   //checks to make sure it's a 3 digit number
+            {
+              return i;  //returns answer of 906609
+            }
+          }
+      }
+    }
+  };
+
+);
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
-      
+  
+var smallBy20 = function() 
+{
+  var u = createPrimeList(20);
+  var ans = _.reduce(u, function(memo, num) {return memo*num}, 1);
+  return ans; //answer is 9699690
+}
     
   });
 
@@ -161,7 +198,26 @@ describe("About Applying What We Have Learnt", function() {
     
   });
 
-  it("should find the 10001st prime", function () {
-
+it("should find the 10001st prime", function () {
+ 
+var find10001Prime = function() {
+  primes = [1, 2]
+  var i = 3;
+  while (primes.length <= 10001) 
+  {
+    var prime = true;
+    for (var j = 1; j<primes.length; j++) 
+    {
+      if (i % primes[j] === 0)
+      {
+        prime = false;
+        j = primes.length;
+      }
+    }
+    if (prime) {primes.push(i);}
+    i = i + 1;
+  }
+  return primes.pop();  //answer is 104743
+};
   });
 });
