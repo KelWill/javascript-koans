@@ -195,7 +195,8 @@ var smallBy20 = function()
   });
 
   it("should find the difference between the sum of the squares and the square of the sums", function () {
-    
+
+var diffSoS = function(a, b) { return Math.abs(Math.pow(a,2) + Math.pow(b,2) - Math.pow(a+b, 2));}
   });
 
 it("should find the 10001st prime", function () {
